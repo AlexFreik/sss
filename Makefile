@@ -1,7 +1,7 @@
 .PHONY: *
 
 all:
-	make start
+	make dev
 
 install:
 	npm install
@@ -9,5 +9,5 @@ install:
 pretty:
 	npx prettier --write .
 
-start:
-	npm start
+dev:
+	npm run dev
