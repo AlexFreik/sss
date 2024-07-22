@@ -3,12 +3,12 @@ import Calendar from './Calendar';
 import Sidebar from './Sidebar';
 
 function App() {
-    const [count, setCount] = useState(0);
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     return (
         <>
-            <Calendar />
-            <Sidebar />
+            <Calendar setSelectedEvent={setSelectedEvent} />
+            {selectedEvent && <Sidebar event={selectedEvent} setEvent={setSelectedEvent} />}
         </>
     );
 }

@@ -3,25 +3,16 @@ function getHourStr(hour) {
     if (hour <= 12) return hour + ' AM';
     return hour - 12 + ' PM';
 }
+
 function daysInMonth(year, month) {
     return new Date(year, (month + 1) % 12, 0).getDate();
-}
-
-function getFirstWeekday(year, month) {
-    return new Date(year, month, 1).getDay();
-}
-
-function formatTime(num) {
-    console.assert(num >= 0, num);
-    if (num < 10) return '0' + num;
-    return String(num);
 }
 
 function escapeHTML(str) {
     return new Option(str).innerHTML;
 }
 
-function getDateString(date, timeZone = 'Asia/Kolkata') {
+function toISTString(date, timeZone = 'Asia/Kolkata') {
     return new Date(date)
         .toLocaleString('sv-SE', {
             year: 'numeric',
@@ -35,4 +26,29 @@ function getDateString(date, timeZone = 'Asia/Kolkata') {
         .replace(' ', 'T');
 }
 
-export { getHourStr, daysInMonth, getFirstWeekday, formatTime, escapeHTML, getDateString };
+// function parseDate(str) {
+//   return {
+//     year: Number(str.slice(0, 4)),
+//     month: Number(str.slice(5, 7)),
+//     date: Number(str.slice(8, 10)),
+//   }
+// }
+
+function toISTDate(str) {
+    const dateString = `${str}T00:00:00+05:30`;
+    return new Date(dateString);
+}
+
+function getDateRange(baseStr, range) {
+    const baseDate = toISTDate(baseStr);
+
+    const minDate = new Date(baseDate);
+    minDate.setDate(minDate.getDate() - range);
+
+    const maxDate = new Date(baseDate.getTime() - 1);
+    maxDate.setDate(maxDate.getDate() + range + 1);
+
+    return [minDate, maxDate];
+}
+
+export { getHourStr, daysInMonth, escapeHTML, toISTString, getDateRange };
